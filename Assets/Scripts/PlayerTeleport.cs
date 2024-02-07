@@ -7,9 +7,8 @@ public class PlayerTeleport : MonoBehaviour
     // Game object used to take the transform of teleport destination
     [SerializeField]
     private GameObject currentTeleport;
-    // Attachment for transition effect
-    //public Animator transition;
-    // Adjustable delay for transition effect
+    [SerializeField]
+    public GameObject activeCheckpoint;
     public float TransitionTime = 0.3f;
     [SerializeField]
     private GameObject player;
@@ -32,9 +31,9 @@ public class PlayerTeleport : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         // grabs destination on entering location of tagged object.
-        if (collision.CompareTag("Teleport"))
+        if (collision.CompareTag("Checkpoint"))
         {
-            currentTeleport = collision.gameObject;
+            activeCheckpoint = collision.gameObject;
         }
         if (collision.CompareTag("KillBox"))
         {
@@ -66,5 +65,20 @@ public class PlayerTeleport : MonoBehaviour
                 player.transform.position = (currentTeleport.GetComponent<Teleport>().GetDestination().position);
                 //transition.SetBool("Start", false);
             }
+    }
+    private IEnumerator CheckpointSpawn()
+    {
+        // uses destination from DoorTP script to move player
+        if (currentTeleport != null)
+            {
+                //transition.SetBool("Start", true);
+                yield return new WaitForSeconds(TransitionTime);
+                player.transform.position = (activeCheckpoint.GetComponent<Teleport>().GetDestination().position);
+                //transition.SetBool("Start", false);
+            }
+    }
+    public void Respawn()
+    {
+        StartCoroutine(CheckpointSpawn());
     }
 }

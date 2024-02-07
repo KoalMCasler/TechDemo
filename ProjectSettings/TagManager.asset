@@ -10,6 +10,7 @@ TagManager:
   - Teleport
   - FullBody
   - CrouchBody
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

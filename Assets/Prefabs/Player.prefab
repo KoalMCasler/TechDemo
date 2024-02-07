@@ -301,7 +301,6 @@ GameObject:
   - component: {fileID: 4001950980888334431}
   - component: {fileID: 1946363290453704880}
   - component: {fileID: 5396209091402087551}
-  - component: {fileID: 8817652240068305253}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -375,27 +374,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8817652240068305253
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4417132540810728693}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0000004, y: 2.8319814, z: 1.0000005}
-  m_Center: {x: 0.000000079472855, y: 0.41599107, z: -0.000000079472855}
 --- !u!1 &4685597618729224530
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3232131917839112559}
   - component: {fileID: 4269985998552275079}
+  - component: {fileID: 3525247781477874021}
   - component: {fileID: 1553741497236379543}
   - component: {fileID: 8406789950943791449}
   - component: {fileID: 8542976417957940492}
@@ -463,6 +442,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &3525247781477874021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685597618729224530}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.7787242, z: 0.81655145}
+  m_Center: {x: 0, y: 0.40805078, z: -0.01581335}
 --- !u!114 &1553741497236379543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpawner: {fileID: 8217013000354047853, guid: cda88c676c3d7fc47bebcd1199961041, type: 3}
+  health: 0
 --- !u!114 &8542976417957940492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,7 +523,7 @@ MonoBehaviour:
   playerRB: {fileID: 4269985998552275079}
   fpsCamera: {fileID: 5475818898786066053}
   PlayerController: {fileID: 0}
-  crouchedPlayer: {fileID: 4896972162856048747, guid: fc3e8cc906177c248a37cb5742a475d6, type: 3}
+  crouchedPlayer: {fileID: 8967252839428002744, guid: fc3e8cc906177c248a37cb5742a475d6, type: 3}
   speedMultiplier: 2
   sprintMultiplier: 2
   crouchMultiplier: 0.7
@@ -541,7 +542,7 @@ MonoBehaviour:
   moveSpeed: 4
   maxMoveSpeed: 2
   minMoveSpeed: 8
-  crouchedTransform: {fileID: 8903503358607172815, guid: fc3e8cc906177c248a37cb5742a475d6, type: 3}
+  crouchedTransform: {fileID: 815024768346760778, guid: fc3e8cc906177c248a37cb5742a475d6, type: 3}
   lookSensitivity: 5
   upDownLimit: 0
 --- !u!114 &8816854784157691810
@@ -557,6 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTeleport: {fileID: 0}
+  activeCheckpoint: {fileID: 0}
   TransitionTime: 0.3
   player: {fileID: 0}
   playerSpawnPosition: {fileID: 0}

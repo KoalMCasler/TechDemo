@@ -29,7 +29,7 @@ public class FPS : MonoBehaviour
     [SerializeField]
     private float crouchMultiplier;
     [SerializeField]
-    private int jumpForce;
+    private float jumpForce;
     //[SerializeField]
     //private float gravity;
     [SerializeField]
@@ -80,9 +80,9 @@ public class FPS : MonoBehaviour
         {
             moveSpeed = minMoveSpeed;
         }
-        if(jumpForce < 1)
+        if(jumpForce < 0)
         {
-            jumpForce = 1;
+            jumpForce = 0.5f;
         }
         if(upDownLimit < 60 || upDownLimit > 80)
         {

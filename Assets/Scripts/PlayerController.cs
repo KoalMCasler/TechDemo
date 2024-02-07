@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        health = 10;
+        health = 3;
         player = this.gameObject;
         //playerRB = this.GetComponent<Rigidbody>(); 
         //reSpawnTransform = this.transform;
@@ -39,6 +39,6 @@ public class PlayerController : MonoBehaviour
     void Respawn()
     {
         player.GetComponent<PlayerTeleport>().Respawn();
-        health = 1; 
+        health = 3; 
     }
 }

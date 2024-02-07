@@ -76,6 +76,11 @@ public class PlayerTeleport : MonoBehaviour
                 player.transform.position = (activeCheckpoint.GetComponent<Teleport>().GetDestination().position);
                 //transition.SetBool("Start", false);
             }
+            else
+            {
+                yield return new WaitForSeconds(TransitionTime);
+                player.transform.position = (playerSpawnPosition.GetComponent<Teleport>().GetDestination().position);
+            }
     }
     public void Respawn()
     {

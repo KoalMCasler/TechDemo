@@ -5,25 +5,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private Rigidbody playerRB;
+    private Transform reSpawnTransform;
     // Start is called before the first frame update
+    void Awake()
+    {
+        playerRB = this.GetComponent<Rigidbody>(); 
+        reSpawnTransform = this.transform;
+    }
     void Start()
     {
         
     }
+    public void ReSpawn()
+    {
+        this.transform.position = reSpawnTransform.position;
+        this.gameObject.SetActive(true);
+    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    // on move is called every input action
-    void OnMove(InputValue movementValue)
-    {
-        // Extracting player input
-        Vector2 moveVector2 = movementValue.Get<Vector2>();
-        Vector3 moveVector3 = new Vector3(moveVector2.x, 0, moveVector2.y);
-        // Make player move
-        gameObject.transform.Translate(moveVector3);
-        Debug.Log("Input value: "+ moveVector3);
-    }
 }

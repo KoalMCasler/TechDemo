@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3307436007634248562}
   - component: {fileID: 8694299715813295081}
   - component: {fileID: -1842200159212140789}
-  - component: {fileID: 8568101164131093756}
   m_Layer: 0
   m_Name: Rain
   m_TagString: Untagged
@@ -134,18 +133,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8568101164131093756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721061393691903072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cd2080884a216b47bdea26701216401, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cube: {fileID: 721061393691903072}
-  CubeIsAlive: 0
-  SpawnPosition: {x: 0, y: 0, z: 0}

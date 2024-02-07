@@ -15,6 +15,10 @@ public class FPS : MonoBehaviour
     private Rigidbody playerRB;
     [SerializeField]
     private Camera fpsCamera;
+    [SerializeField]
+    private PlayerController PlayerController;
+    [SerializeField]
+    private GameObject crouchedPlayer;
     [Header("Movement Settings")]
     private Vector3 walkInput;
     private Vector3 moveValue;
@@ -42,7 +46,6 @@ public class FPS : MonoBehaviour
     private LayerMask ground;
     private Vector3 speedVector;
     private float verticalRotation;
-    private PlayerController PlayerController;
     [SerializeField]
     private Vector3 moveVector3;
     [SerializeField]
@@ -51,30 +54,27 @@ public class FPS : MonoBehaviour
     public int moveSpeed;
     public int maxMoveSpeed;
     public int minMoveSpeed;
-    
-    [Header("Collision Layers")]
-    [SerializeField]
-    private LayerMask collisionLayers;
-    [SerializeField]
-    private Vector3 scaleChange;
+    public Transform crouchedTransform;
     [Header("Look Settings")]
     [SerializeField]
     private float lookSensitivity;
     [SerializeField]
     private float upDownLimit;
+
     
     
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = this.transform.localScale;
-        scaleChange = new Vector3(0f,0.4f,0f);
+        originalScale = player.transform.localScale;
+        crouchedTransform.localScale = crouchedPlayer.transform.localScale; 
         isCrouching = false;
         isSprinting = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         playerRB = this.GetComponent<Rigidbody>();
         player = gameObject;
+        PlayerController = player.GetComponent<PlayerController>();
         fpsCamera = Camera.main;
         if(moveSpeed < minMoveSpeed || moveSpeed > maxMoveSpeed)
         {
@@ -115,13 +115,18 @@ public class FPS : MonoBehaviour
         if(isSprinting == true && isCrouching == false)
         {
             player.transform.localScale = originalScale;
-            Debug.Log("Is sprinting");
+            //Debug.Log("Is sprinting");
             gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*sprintMultiplier);
         }
         if(isCrouching == true)
         {
-            Debug.Log("Is Crouching");
+            //Debug.Log("Is Crouching");
             gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*crouchMultiplier);
+            player.transform.localScale = crouchedPlayer.transform.localScale;  
+        }
+        if(isCrouching != true)
+        {
+            player.transform.localScale = originalScale; 
         }
         if(isSprinting == false && isCrouching == false)
         {
@@ -129,10 +134,42 @@ public class FPS : MonoBehaviour
             gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed);
         }
     }
+    void OnSprint()
+    {
+        if(IsSprinting())
+        {
+            Debug.Log("Player Started to sprint");
+        }
+        else
+        {
+            Debug.Log("Player stopped sprinting");
+        }
+
+    }
     void OnCrouch()
     {
-        isCrouching = true;
+        if(IsCrouched())
+        {
+            Debug.Log("Player Crouched");
+        }
+        else
+        {
+            Debug.Log("Player UnCrouched");
+        }
     }
+    void OnJump()
+    {
+        if(IsGrounded())
+        {
+            moveVector3.y = jumpForce;
+            Debug.Log("Player Jumped");
+        }
+        else
+        {
+            Debug.Log("Player is not grounded");
+        }
+    }
+
     void OnMove(InputValue movementValue)
     {
         // Extracting player input
@@ -140,7 +177,7 @@ public class FPS : MonoBehaviour
         moveVector3 = new Vector3(moveVector2.x, 0, moveVector2.y);
         // Make player move
         //gameObject.transform.Translate(moveVector3*Time.deltaTime);
-        Debug.Log("Input value: "+ moveVector3);
+        //Debug.Log("Input value: "+ moveVector3);
     }
     void ManageLook()
     {
@@ -155,7 +192,7 @@ public class FPS : MonoBehaviour
     {
         // Tests player speed
         //speedVector = playerController.velocity;
-        currentSpeed = speedVector.magnitude;
+        //currentSpeed = speedVector.magnitude;
     }
     bool IsGrounded()
     {
@@ -165,4 +202,29 @@ public class FPS : MonoBehaviour
     {
         return Physics.CheckSphere(roofCheck.position, .1f, ground);
     }
+    bool IsCrouched()
+    {
+        if(isCrouching == false)
+        {
+            isCrouching = true;
+        }
+        else
+        {
+            isCrouching = false;
+        }
+        return isCrouching;
+    }
+    bool IsSprinting()
+    {
+        if(isSprinting == false)
+        {
+            isSprinting = true;
+        }
+        else
+        {
+            isSprinting = false;
+        }
+        return isSprinting;
+    }
+
 }

@@ -28,4 +28,8 @@ public class CubeGenerator : MonoBehaviour
         GameObject.Instantiate(cube, gameObject.transform);
         CubeIsAlive = true;
     }
+    public void CubeIsDestroyed()
+    {
+        CubeIsAlive = false;
+    }
 }

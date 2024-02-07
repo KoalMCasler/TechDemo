@@ -7,15 +7,9 @@ public class KillBox : MonoBehaviour
 {
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
-        if(other.CompareTag("Player"))
+        if(!other.CompareTag("Player"))
         {
-            other.gameObject.SetActive(false);
-            other.GetComponent<PlayerController>().ReSpawn();
-        }
-        else
-        {
-            Destroy(other);
+            Destroy(other.gameObject);
         }
     }
 }

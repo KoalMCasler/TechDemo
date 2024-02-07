@@ -5,22 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameObject player;
     private Rigidbody playerRB;
-    private Transform reSpawnTransform;
+    public GameObject PlayerSpawner;
+    //private Transform reSpawnTransform;
     // Start is called before the first frame update
     void Awake()
     {
+        player = this.gameObject;
         playerRB = this.GetComponent<Rigidbody>(); 
-        reSpawnTransform = this.transform;
+        //reSpawnTransform = this.transform;
+        PlayerSpawner = GameObject.FindWithTag("PlayerSpawner");
     }
     void Start()
     {
         
     }
-    public void ReSpawn()
+    void OnDestroy()
     {
-        this.transform.position = reSpawnTransform.position;
-        this.gameObject.SetActive(true);
+        PlayerSpawner.GetComponent<PlayerSpawner>().ReSpawnPlayer();
     }
-
 }

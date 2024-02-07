@@ -69,7 +69,7 @@ public class PlayerTeleport : MonoBehaviour
     private IEnumerator CheckpointSpawn()
     {
         // uses destination from DoorTP script to move player
-        if (currentTeleport != null)
+        if (activeCheckpoint != null)
             {
                 //transition.SetBool("Start", true);
                 yield return new WaitForSeconds(TransitionTime);

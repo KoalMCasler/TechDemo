@@ -13,7 +13,8 @@ public class PlayerTeleport : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private GameObject playerSpawnPosition;   
+    private GameObject playerSpawnPosition; 
+    public PlayerController playerController;  
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -39,7 +40,7 @@ public class PlayerTeleport : MonoBehaviour
         {
             Debug.Log("Player touched kill box");
             currentTeleport = playerSpawnPosition;
-            StartCoroutine(Teleport());
+            playerController.health = 0;
         }
     }
 

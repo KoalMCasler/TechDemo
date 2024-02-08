@@ -11,4 +11,15 @@ public class DamageBox : MonoBehaviour
             other.GetComponent<PlayerController>().health -= 1;
         }
     }
+    void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            for(float i = 0; i < 1; i += Time.deltaTime)
+            {
+                other.GetComponent<PlayerController>().health -= 1;
+                i = 0;
+            }
+        }
+    }
 }

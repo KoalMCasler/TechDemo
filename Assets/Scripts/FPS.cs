@@ -60,6 +60,8 @@ public class FPS : MonoBehaviour
     private float lookSensitivity;
     [SerializeField]
     private float upDownLimit;
+    [SerializeField]
+    private bool JumpIsPressed;
 
     
     
@@ -107,6 +109,12 @@ public class FPS : MonoBehaviour
     }
     void ManageInput()
     {
+        //Jump check.
+        if(JumpIsPressed == true)
+        {
+            moveVector3.y = jumpForce;
+            JumpIsPressed = false;
+        }
         // movement logic
         if(isSprinting == true && isCrouching == false)
         {
@@ -128,6 +136,11 @@ public class FPS : MonoBehaviour
         {
             player.transform.localScale = originalScale;
             gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed);
+        }
+        // jump reset
+        if(JumpIsPressed == false)
+        {
+            moveVector3.y = 0;
         }
     }
     void OnSprint()
@@ -157,7 +170,7 @@ public class FPS : MonoBehaviour
     {
         if(IsGrounded())
         {
-            moveVector3.y = jumpForce;
+            JumpIsPressed = true;
             Debug.Log("Player Jumped");
         }
         else

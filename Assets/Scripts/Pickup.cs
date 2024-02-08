@@ -8,6 +8,7 @@ public class Pickup : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            other.GetComponent<PlayerController>().conins += 1;
             this.gameObject.SetActive(false);
         }
     }

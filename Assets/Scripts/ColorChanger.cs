@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
@@ -10,7 +11,7 @@ public class ColorChanger : MonoBehaviour
     public Color color4;
     public Color color5;
     public Color color6;
-    public int i;
+    public int colorIndex;
 
     public Material thisMat;
     // Start is called before the first frame update
@@ -21,37 +22,39 @@ public class ColorChanger : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
+    {  
+        Invoke("SetMatColor", 3);
+    }
+    void SetMatColor()
     {
-        for(i = 0; i < 70; i++)
+        colorIndex += 1;
+        if(colorIndex <= 0 || colorIndex > 6)
         {
-            if(i < 10)
-            {
-                thisMat.SetColor("_Color", color1);
-            }
-            if(i > 10 && i < 20)
-            {
-                thisMat.SetColor("_Color", color2);
-            }
-            if(i > 20 && i < 30)
-            {
-                thisMat.SetColor("_Color", color3);
-            }
-            if(i > 30 && i < 40)
-            {
-                thisMat.SetColor("_Color", color4);
-            }
-            if(i > 40 && i < 50)
-            {
-                thisMat.SetColor("_Color", color5);
-            }
-            if(i > 50 && i < 60)
-            {
-                thisMat.SetColor("_Color", color6);
-            }
-            if(i < 60)
-            {
-                i = 0;
-            }
+            colorIndex = 1;
+        }
+        if(colorIndex == 1)
+        {
+            thisMat.SetColor("_Color", color1);
+        }
+        if(colorIndex == 2)
+        {
+            thisMat.SetColor("_Color", color2);
+        }
+        if(colorIndex == 3)
+        {
+            thisMat.SetColor("_Color", color3);
+        }
+        if(colorIndex == 4)
+        {
+            thisMat.SetColor("_Color", color4);
+        }
+        if(colorIndex == 5)
+        {
+            thisMat.SetColor("_Color", color5);
+        }
+        if(colorIndex == 6)
+        {
+            thisMat.SetColor("_Color", color6);
         }
     }
 }

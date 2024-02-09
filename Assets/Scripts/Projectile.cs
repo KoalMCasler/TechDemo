@@ -5,11 +5,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public GameObject player;
-    private ArmCannon playerAC;
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        playerAC = player.GetComponent<ArmCannon>();
         Invoke("KillObject",5);
     }
     void KillObject()
@@ -20,8 +18,8 @@ public class Projectile : MonoBehaviour
     {
         //other.gameObject.GetComponent<Material>().color
     }
-    void OnDestory()
+    void OnDestroy()
     {
-        playerAC.bulletIsAlive = false;
+        player.GetComponent<ArmCannon>().BulletIsDestroyed();
     }
 }

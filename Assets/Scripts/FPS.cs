@@ -19,7 +19,14 @@ public class FPS : MonoBehaviour
     private PlayerController PlayerController;
     [SerializeField]
     private GameObject crouchedPlayer;
+    [SerializeField]
+    private GameObject HUD;
+    [SerializeField]
+    private GameObject pauseMenu;
+    private bool GameIsPaused;
     [Header("Movement Settings")]
+    [SerializeField]
+    public bool inputIsEnalbled;
     private Vector3 walkInput;
     private Vector3 moveValue;
     [SerializeField]
@@ -68,6 +75,7 @@ public class FPS : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inputIsEnalbled = true;
         originalScale = player.transform.localScale;
         crouchedTransform.localScale = crouchedPlayer.transform.localScale; 
         isCrouching = false;
@@ -106,41 +114,45 @@ public class FPS : MonoBehaviour
         ManageLook();
         ManageInput();
         SpeedTest();
+        PauseCheck();
     }
     void ManageInput()
     {
-        //Jump check.
-        if(JumpIsPressed == true)
+        if(inputIsEnalbled)
         {
-            moveVector3.y = jumpForce;
-            JumpIsPressed = false;
-        }
-        // movement logic
-        if(isSprinting == true && isCrouching == false)
-        {
-            player.transform.localScale = originalScale;
-            //Debug.Log("Is sprinting");
-            gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*sprintMultiplier);
-        }
-        if(isCrouching == true)
-        {
-            //Debug.Log("Is Crouching");
-            gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*crouchMultiplier);
-            player.transform.localScale = crouchedPlayer.transform.localScale;  
-        }
-        if(isCrouching != true)
-        {
-            player.transform.localScale = originalScale; 
-        }
-        if(isSprinting == false && isCrouching == false)
-        {
-            player.transform.localScale = originalScale;
-            gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed);
-        }
-        // jump reset
-        if(JumpIsPressed == false)
-        {
-            moveVector3.y = 0;
+            //Jump check.
+            if(JumpIsPressed == true)
+            {
+                moveVector3.y = jumpForce;
+                JumpIsPressed = false;
+            }
+            // movement logic
+            if(isSprinting == true && isCrouching == false)
+            {
+                player.transform.localScale = originalScale;
+                //Debug.Log("Is sprinting");
+                gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*sprintMultiplier);
+            }
+            if(isCrouching == true)
+            {
+                //Debug.Log("Is Crouching");
+                gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed*crouchMultiplier);
+                player.transform.localScale = crouchedPlayer.transform.localScale;  
+            }
+            if(isCrouching != true)
+            {
+                player.transform.localScale = originalScale; 
+            }
+            if(isSprinting == false && isCrouching == false)
+            {
+                player.transform.localScale = originalScale;
+                gameObject.transform.Translate(moveVector3*Time.deltaTime*moveSpeed);
+            }
+            // jump reset
+            if(JumpIsPressed == false)
+            {
+                moveVector3.y = 0;
+            }
         }
     }
     void OnSprint()
@@ -168,14 +180,17 @@ public class FPS : MonoBehaviour
     }
     void OnJump()
     {
-        if(IsGrounded())
+        if(inputIsEnalbled)
         {
-            JumpIsPressed = true;
-            Debug.Log("Player Jumped");
-        }
-        else
-        {
-            Debug.Log("Player is not grounded");
+            if(IsGrounded())
+            {
+                JumpIsPressed = true;
+                Debug.Log("Player Jumped");
+            }
+            else
+            {
+                Debug.Log("Player is not grounded");
+            }
         }
     }
 
@@ -190,12 +205,15 @@ public class FPS : MonoBehaviour
     }
     void ManageLook()
     {
-        float mouseXRotation = Input.GetAxis("Mouse X") * lookSensitivity;
-        float mouseYRotation = Input.GetAxis("Mouse Y");
-        player.transform.Rotate(0f,mouseXRotation,0f);
-        verticalRotation -= mouseYRotation * lookSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation,-upDownLimit,upDownLimit);
-        fpsCamera.transform.localRotation = Quaternion.Euler(verticalRotation,0,0);
+        if(inputIsEnalbled)
+        {
+            float mouseXRotation = Input.GetAxis("Mouse X") * lookSensitivity;
+            float mouseYRotation = Input.GetAxis("Mouse Y");
+            player.transform.Rotate(0f,mouseXRotation,0f);
+            verticalRotation -= mouseYRotation * lookSensitivity;
+            verticalRotation = Mathf.Clamp(verticalRotation,-upDownLimit,upDownLimit);
+            fpsCamera.transform.localRotation = Quaternion.Euler(verticalRotation,0,0);
+        }
     }
     void SpeedTest()
     {
@@ -235,5 +253,44 @@ public class FPS : MonoBehaviour
         }
         return isSprinting;
     }
-
+    void OnPause()
+    {
+        if(GameIsPaused == true)
+        {
+            GameIsPaused = false;
+        }
+        else
+        {
+            GameIsPaused = true;
+        }
+    }
+    void PauseGame()
+    {
+        Time.timeScale = 0f;
+        HUD.SetActive(false);
+        pauseMenu.SetActive(true);
+        inputIsEnalbled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        HUD.SetActive(true);
+        pauseMenu.SetActive(false);
+        inputIsEnalbled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    void PauseCheck()
+    {
+        if(GameIsPaused == true)
+        {
+            PauseGame();
+        }
+        if(GameIsPaused == false)
+        {
+            ResumeGame();
+        }
+    }
 }

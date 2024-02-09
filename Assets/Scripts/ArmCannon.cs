@@ -13,10 +13,12 @@ public class ArmCannon : MonoBehaviour
     public Quaternion bulletRotation;
     private Transform playerTransform;
     private GameObject player;
+    private FPS playerFPS;
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerTransform = this.GetComponent<Transform>();
+        playerFPS = player.GetComponent<FPS>();
         if(BulletForce <= 1)
         {
             BulletForce = 2;
@@ -25,16 +27,19 @@ public class ArmCannon : MonoBehaviour
     }
     void OnFire()
     {
-        if(bulletIsAlive != true)
+        if(playerFPS.inputIsEnalbled)
         {
-            bulletIsAlive = true;
-            bullet = GameObject.Instantiate(projectile, armCannon.transform.position,bulletRotation);
-            bulletRB = bullet.GetComponent<Rigidbody>();
-            bulletRB.AddForce(armCannon.transform.up*BulletForce, ForceMode.Impulse);
-        }
-        else
-        {
-            Destroy(bullet);
+            if(bulletIsAlive != true)
+            {
+                bulletIsAlive = true;
+                bullet = GameObject.Instantiate(projectile, armCannon.transform.position,bulletRotation);
+                bulletRB = bullet.GetComponent<Rigidbody>();
+                bulletRB.AddForce(armCannon.transform.up*BulletForce, ForceMode.Impulse);
+            }
+            else
+            {
+                Destroy(bullet);
+            }    
         }
     }
     void Update()

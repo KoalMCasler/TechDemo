@@ -123,7 +123,7 @@ public class FPS : MonoBehaviour
             //Jump check.
             if(JumpIsPressed == true)
             {
-                moveVector3.y = jumpForce;
+                playerRB.AddForce(Vector3.up * jumpForce);
                 JumpIsPressed = false;
             }
             // movement logic
